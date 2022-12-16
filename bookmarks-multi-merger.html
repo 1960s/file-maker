@@ -12,7 +12,9 @@
 
     let arrSet = []
 let duplicate = []
+let headers = []
     let regex = new RegExp(`HREF="(.*?)"`)
+    let regexHead = new RegExp(`HREF="(.*?)"`)
 //JS SECTION
 
   function test(bookmarkPage){
@@ -27,24 +29,24 @@ let duplicate = []
     for (let i = 0; i < str.length; i++){
 
 
-      if (str[i].includes("<H3") ){
-        arrSet.push(str[i])
+      if (str[i].includes("<H3") && !str[i].includes("PERSONAL_TOOLBAR_FOLDER") ){
+        arrSet.push(`</DL><p>
+${str[i]}
+<DL><p>`)
+//headers.push(str[i].match(regexHead) )
       }
 
 
       else if (str[i].includes("HREF=")){
         let site = str[i].match(regex)     
-       // console.log(site[1])
+
 
         let arr2 = arrSet.flat(3).join()
-        //console.log(arr2)
+
         if (!arr2.includes(site[1])){
           arrSet.push(str[i])    
         }
-else {
-duplicate.push(site[1])
-console.log("")
-}
+
 
       }
 
